@@ -1,10 +1,20 @@
-import { Text } from "@nextui-org/react"
+import { useState, useEffect } from 'react';
 import { Layout } from "../../components/layouts"
+import { FavoritePokemonCard, NoFavorites } from "../../components/ui"
+import { localFavorites } from "../../utils";
 
 const FavortiePage = () => {
+  const [pokemons, setPokemons] = useState<number[]>([]);
+
+  useEffect(() => { setPokemons(localFavorites.pokemons) }, []);
+
+
   return (
     <Layout title="Pokemon | Favoritos">
-        <Text h1 color="white">Hola mundo-favoritos</Text>
+      {pokemons.length === 0
+        ? <NoFavorites />
+        : <FavoritePokemonCard pokemons={pokemons}/>
+      }
     </Layout>
   )
 }
