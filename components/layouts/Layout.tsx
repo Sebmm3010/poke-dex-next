@@ -20,6 +20,8 @@ export const Layout: FC<Props> = ({ children, title }) => {
                 <meta property="og:title" content={`Informacion sobre ${title}`} />
                 <meta property="og:description" content={`Esta es la pagina sobre ${title}`} />
                 <meta property="og:image" content={`${origin}/imgs/banner.png`} />
+                <meta property="og:type" content="image" />
+                <meta property="og:url" content={`/pokemon/${title}`}/>
             </Head>
 
             {/* Navbar */}
