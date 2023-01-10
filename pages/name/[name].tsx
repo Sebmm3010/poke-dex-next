@@ -3,7 +3,7 @@ import { Button, Card, Container, Grid, Image, Text } from "@nextui-org/react";
 
 import { pokeApi } from '../../api/getPokemon';
 import { Pokemon } from "../../interfaces";
-import { localFavorites } from "../../utils";
+import { getPokemonInfo, localFavorites } from "../../utils";
 
 import confetti from "canvas-confetti";
 
@@ -122,14 +122,14 @@ const PokemonNamePage: NextPage<Props> = ({ pokemon }) => {
 export const getStaticPaths: GetStaticPaths = async (ctx) => {
     // const { data } = await  // your fetch function here 
 
-    const {data} = await pokeApi.get<PokemonList>('/pokemon?limit=151');
-    const pokemons151: string[] = data.results.map(pokemon=>pokemon.name);
-    
+    const { data } = await pokeApi.get<PokemonList>('/pokemon?limit=151');
+    const pokemons151: string[] = data.results.map(pokemon => pokemon.name);
+
     // const pokemon151=data;
 
     return {
-        paths: pokemons151.map(name=>({
-            params:{name}
+        paths: pokemons151.map(name => ({
+            params: { name }
         })),
         fallback: false
     }
@@ -140,12 +140,13 @@ export const getStaticPaths: GetStaticPaths = async (ctx) => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
     const { name } = params as { name: string };
 
-    const { data } = await pokeApi.get<Pokemon>(`/pokemon/${name}`);
+    // const { data } = await pokeApi.get<Pokemon>(`/pokemon/${name}`);
+    const pokemon = await getPokemonInfo(name);
 
 
     return {
         props: {
-            pokemon: data
+            pokemon
         }
     }
 }
